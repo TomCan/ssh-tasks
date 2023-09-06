@@ -1,0 +1,36 @@
+{
+    "name": "tomcan/ssh-tasks",
+    "description": "Execute tasks/commands over SSH from PHP",
+    "type": "package",
+    "keywords": [
+        "tomcan",
+        "ssh",
+        "tasks",
+        "commands",
+        "execute",
+        "shell",
+        "remote",
+        "scripts"
+    ],
+    "homepage": "https://github.com/tomcan/ssh-tasks",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "Tom Cannaerts",
+            "homepage": "https://tom.be"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "TomCan\\SshTasks\\": "./src"
+        }
+    },
+    "require": {
+        "php": ">=7.4",
+        "ext-ssh2": "*"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^1.10",
+        "friendsofphp/php-cs-fixer": "^3.16"
+    }
+}
