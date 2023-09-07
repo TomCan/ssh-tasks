@@ -7,14 +7,20 @@ class SshConnection
     private string $host;
     private int $port;
     private string $user;
+    /** @var array<mixed> */
     private array $authMethods;
+    /** @var array<mixed>|null */
     private ?array $sshMethods;
     private ?string $fingerprint;
 
-    /** @var resource */
+    /** @var resource|false */
     private $connection;
     private bool $connected = false;
 
+    /**
+     * @param array<mixed> $authMethods
+     * @param array<mixed>|null $sshMethods
+     */
     public function __construct(string $host, int $port, string $user, array $authMethods, string $fingerprint = null, array $sshMethods = null)
     {
         $this->host = $host;
@@ -25,7 +31,7 @@ class SshConnection
         $this->sshMethods = $sshMethods;
     }
 
-    public function connect()
+    public function connect(): void
     {
         // establish ssh connection
         $callbacks = [
@@ -76,7 +82,7 @@ class SshConnection
 
         $this->connected = true;
     }
-    private function cb_disconnect($reason, $message, $language)
+    private function cb_disconnect(string $reason, string $message, string $language): void
     {
         $this->connected = false;
     }
@@ -91,7 +97,9 @@ class SshConnection
      */
     public function getConnection()
     {
+        if (false === $this->connection) {
+            throw new \Exception('Connection not set');
+        }
         return $this->connection;
     }
-
 }

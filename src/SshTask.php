@@ -17,6 +17,10 @@ class SshTask
         $this->command = $command;
     }
 
+    /**
+     * @param array<string, callable> $callbacks
+     * @return string[]
+     */
     public function execute(bool $getExitCode = false, string $outputMode = 'log', array $callbacks = []): array
     {
         if (!$this->sshConnection->isConnected()) {
