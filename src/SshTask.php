@@ -17,7 +17,7 @@ class SshTask
         $this->command = $command;
     }
 
-    public function execute(bool $getExitCode = false, string $outputMode = 'log'): array
+    public function execute(bool $getExitCode = false, string $outputMode = 'log', array $callbacks = []): array
     {
         if (!$this->sshConnection->isConnected()) {
             $this->sshConnection->connect();
@@ -68,7 +68,10 @@ class SshTask
                             $output[0] .= $input;
                             break;
                         case 'callback':
-                            // TODO: callback function
+                            if (isset($callbacks['output'])) {
+                                call_user_func($callbacks['output'], $input);
+                            }
+                            break;
                     }
                 }
             }
@@ -84,7 +87,9 @@ class SshTask
                             $output[1] .= $input;
                             break;
                         case 'callback':
-                            // TODO: callback function
+                            if (isset($callbacks['error'])) {
+                                call_user_func($callbacks['error'], $input);
+                            }
                     }
                 }
             }
