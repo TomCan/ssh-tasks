@@ -97,8 +97,9 @@ class SshTask
         fclose($stream);
         fclose($errStream);
 
-        if ($getExitCode) {
+        if ($getExitCode && 'callback' !== $outputMode) {
             // exit code *should* be in the last 'out' element
+            // not supported when using callbacks, as we don't keep output
             if ('log' == $outputMode) {
                 for ($i = count($output) - 1; $i > 0; $i--) {
                     if ('out' == $output[$i][1]) {
